@@ -9,13 +9,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
-import org.eclipse.rdf4j.model.URI;
 import org.eclipse.rdf4j.model.ValueFactory;
-import org.eclipse.rdf4j.model.impl.URIImpl;
+import org.eclipse.rdf4j.model.impl.SimpleIRI;
 import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
+import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
 public class Serializer {
@@ -66,17 +66,17 @@ public class Serializer {
     return _xblockexpression;
   }
   
-  protected boolean createTypeStatement(final EObject eObject, final Model graph, final ValueFactory factory) {
-    boolean _xblockexpression = false;
-    {
-      final URIImpl subject = this.extensions.toURI(eObject);
-      final URI predicate = RDF.TYPE;
-      EClass _eClass = eObject.eClass();
-      final URIImpl object = this.extensions.toURI(_eClass);
-      _xblockexpression = graph.add(subject, predicate, object);
-    }
-    return _xblockexpression;
-  }
+	protected boolean createTypeStatement(final EObject eObject, final Model graph, final ValueFactory factory) {
+		boolean _xblockexpression = false;
+		{
+			final SimpleIRI subject = this.extensions.toURI(eObject);
+			final IRI predicate = RDF.TYPE;
+			EClass _eClass = eObject.eClass();
+			final SimpleIRI object = this.extensions.toURI(_eClass);
+			_xblockexpression = graph.add(subject, predicate, object);
+		}
+		return _xblockexpression;
+	}
   
   private Boolean serialize(final EAttribute attribute, final EObject eObject, final Model graph, final ValueFactory factory) {
     boolean _xblockexpression = false;
