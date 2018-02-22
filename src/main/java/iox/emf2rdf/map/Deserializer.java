@@ -14,15 +14,16 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Statement;
+import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.impl.SimpleIRI;
+import org.eclipse.rdf4j.model.impl.URIImpl;
+import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.rdf4j.model.Model;
-import org.eclipse.rdf4j.model.Statement;
-import org.eclipse.rdf4j.model.Value;
-import org.eclipse.rdf4j.model.impl.URIImpl;
-import org.eclipse.rdf4j.model.vocabulary.RDF;
 
 import com.google.common.base.Objects;
 
@@ -137,7 +138,7 @@ public class Deserializer {
     if (_or) {
       return null;
     }
-    URIImpl _uRI = this.extensions.toURI(attribute);
+    SimpleIRI _uRI = this.extensions.toURI(attribute);
     final Model subModel = model.filter(sbj, _uRI, null);
     boolean _isMany = attribute.isMany();
     if (_isMany) {
@@ -184,7 +185,7 @@ public class Deserializer {
     if (_or) {
       return null;
     }
-    URIImpl _uRI = this.extensions.toURI(reference);
+    SimpleIRI _uRI = this.extensions.toURI(reference);
     final Model subModel = model.filter(sbj, _uRI, null);
     boolean _isMany = reference.isMany();
     if (_isMany) {
