@@ -106,35 +106,35 @@ public class LittleTest {
 		}
 
 		long endTime = System.currentTimeMillis();
-		System.out.println("Time to create and store " + (PARENT_COUNT * CHILD_COUNT) + " objects: "
-				+ ((endTime - startTime) / 1000.0) + " sec");
-
-		startTime = System.currentTimeMillis();
-
-		resource = resourceSet.createResource(URI.createURI("http://www.example.org/myResource"));
-		try {
-			resource.load(null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		endTime = System.currentTimeMillis();
-
-		System.out
-				.println("Time to load: " + (PARENT_COUNT * CHILD_COUNT) + " objects " + (endTime - startTime) + " ms");
-
-		Parent parent = (Parent) resource.getContents().get(0);
-
-		startTime = System.currentTimeMillis();
-
-		System.out.println("first parent " + parent.getName() + " has " + parent.getChildren().size() + " children");
-		for (Child child : parent.getChildren()) {
-			child.getName();
-		}
-
-		endTime = System.currentTimeMillis();
-		System.out
-				.println("Time to walk " + CHILD_COUNT + " children of first parent: " + (endTime - startTime) + " ms");
+//		System.out.println("Time to create and store " + (PARENT_COUNT * CHILD_COUNT) + " objects: "
+//				+ ((endTime - startTime) / 1000.0) + " sec");
+//
+//		startTime = System.currentTimeMillis();
+//
+//		resource = resourceSet.createResource(URI.createURI("http://www.example.org/myResource"));
+//		try {
+//			resource.load(null);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		endTime = System.currentTimeMillis();
+//
+//		System.out
+//				.println("Time to load: " + (PARENT_COUNT * CHILD_COUNT) + " objects " + (endTime - startTime) + " ms");
+//
+//		Parent parent = (Parent) resource.getContents().get(0);
+//
+//		startTime = System.currentTimeMillis();
+//
+//		System.out.println("first parent " + parent.getName() + " has " + parent.getChildren().size() + " children");
+//		for (Child child : parent.getChildren()) {
+//			child.getName();
+//		}
+//
+//		endTime = System.currentTimeMillis();
+//		System.out
+//				.println("Time to walk " + CHILD_COUNT + " children of first parent: " + (endTime - startTime) + " ms");
 	}
 }
