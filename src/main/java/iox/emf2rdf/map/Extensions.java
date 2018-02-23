@@ -22,7 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("all")
-class Extensions {
+public class Extensions {
     
     private static final Logger log = LogManager.getLogger(Extensions.class);
     

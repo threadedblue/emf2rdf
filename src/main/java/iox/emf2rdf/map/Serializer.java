@@ -113,6 +113,7 @@ public class Serializer {
 				_or = _not;
 			}
 			if (_or) {
+				log.trace("Was null EAttribute " + attribute.getName() + " _isDerived=" + _isDerived + " _eIsSet=" + eObject.eIsSet(attribute));
 				return null;
 			}
 			final Object value = eObject.eGet(attribute);
@@ -151,18 +152,12 @@ public class Serializer {
 				((Collection<Object>) value).forEach(_function);
 			} else {
 				log.trace("EAttribute was NOT many = " + attribute.getName() + " " + value);
-//				_xifexpression = this.extensions.add(graph, eObject, attribute, value, factory);
+				_xifexpression = this.extensions.add(graph, eObject, attribute, value, factory);
 			}
 			_xblockexpression = _xifexpression;
 		}
 		return Boolean.valueOf(_xblockexpression);
 	}
-
-	// private Boolean serialize1(final EAttribute attribute, final EObject eObject,
-	// final Model graph,
-	// final ValueFactory factory) {
-	// return true;
-	// }
 
 	private Boolean serialize(final EReference reference, final EObject eObject, final Model graph,
 			final ValueFactory factory) {
@@ -185,6 +180,7 @@ public class Serializer {
 				_or = _not;
 			}
 			if (_or) {
+				log.trace("Was null EReference " + reference.getName() + " _isDerived=" + _isDerived + " _eIsSet=" + eObject.eIsSet(reference));
 				return null;
 			}
 			final Object value = eObject.eGet(reference);
@@ -200,9 +196,8 @@ public class Serializer {
 				((Collection<Object>) value).forEach(_function);
 			} else if (value instanceof FeatureMapUtil.FeatureEList) {
 				FeatureMapUtil.FeatureEList features = (FeatureMapUtil.FeatureEList) value;
-				List<AnyType> list = features.basicList();
-				// ((FeatureMapUtil.FeatureEList) value).basicList().get(0);
-				for (AnyType any : list) {
+				List<AnyType> anys = features.basicList();
+				for (AnyType any : anys) {
 					for (FeatureMap.Entry entry : any.getMixed()) {
 						EStructuralFeature feature = entry.getEStructuralFeature();
 						if (feature instanceof EAttribute) {
