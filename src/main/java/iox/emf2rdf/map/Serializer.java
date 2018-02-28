@@ -178,7 +178,7 @@ public class Serializer {
 
 					@Override
 					public void accept(final Object it) {
-						Serializer.this.serializeOne(eObject, reference, ((EObject) it), graph, factory);
+						serializeOne(eObject, reference, ((EObject) it), graph, factory);
 					}
 				};
 				((Collection<Object>) value).forEach(_function);
