@@ -1,14 +1,14 @@
 package  iox.emf2rdf.map;
 
-import com.google.common.base.Objects;
 import java.util.ArrayList;
+
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import iox.emf2rdf.map.Deserializer;
-import iox.emf2rdf.map.Serializer;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+
+import com.google.common.base.Objects;
 
 @SuppressWarnings("all")
 public class EObjectMapper {

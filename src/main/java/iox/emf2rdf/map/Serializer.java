@@ -155,23 +155,7 @@ public class Serializer {
 			if (_isTransient || !_eIsSet) {
 //				log.trace("returned null EReference= " + reference.getName() + " _isTransient=" + _isTransient + " _eIsSet=" + _eIsSet);
 				return null;
-			} // else {
-//				EList<EObject> eList = eObject.eContents();
-//				final Consumer<EObject> _function = new Consumer<EObject>() {
-//
-//					@Override
-//					public void accept(final EObject it) {
-//						if (it instanceof AnyType) {
-////							log.trace("it was AnyType it=" + it.getClass());
-//							Serializer.this.serialize(eObject, (AnyType) it, graph, factory);
-//						} else {
-////							log.warn("it was *NOT* AnyType it=" + it.getClass());
-//							Serializer.this.to(it, graph, factory);
-//						}
-//					}
-//				};
-//				((Collection<EObject>) eList).forEach(_function);
-//			}
+			}
 
 			final Object value = eObject.eGet(reference);
 			boolean _xifexpression = false;
