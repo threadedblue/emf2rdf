@@ -59,7 +59,7 @@ public class Serializer {
 	}
 
 	public Model to(final EObject eObject, final Model graph, final ValueFactory factory) {
-		log.debug("EObject==>" + eObject.eClass().getName());
+		log.debug("EObject==>" + eObject.eClass().getName() + " hsh=" + eObject.hashCode());
 
 		Model _xblockexpression = null;
 		{
@@ -107,11 +107,14 @@ public class Serializer {
 
 	private Boolean serialize(final EAttribute attribute, final EObject eObject, final Model graph,
 			final ValueFactory factory) {
-		log.debug("EAttribute=" + attribute.getName());
 		boolean _xblockexpression = false;
-		{
 			boolean _isTransient = attribute.isTransient();
 			boolean _eIsSet = eObject.eIsSet(attribute);
+			log.debug("EAttribute=" + attribute.getName()
+			+ " _isTransient=" + _isTransient 
+			+ " _eIsSet=" + _eIsSet
+			+ " isFeatureMap=" + FeatureMapUtil.isFeatureMap(attribute)
+			+ " isMany=" + attribute.isMany());
 			if (_isTransient || !_eIsSet) {
 				return null;
 			} else {
@@ -119,10 +122,10 @@ public class Serializer {
 				final Object value = eObject.eGet(attribute);
 				boolean _xifexpression = false;
 				if (FeatureMapUtil.isFeatureMap(attribute)) {
-					log.trace("EAttribute was map = " + attribute.getName());
+//					log.trace("EAttribute was map = " + attribute.getName());
 					Serializer.this.serialize(eObject, (FeatureMap) value, graph, factory);
 				} else if (attribute.isMany()) {
-					log.trace("EAttribute was many = " + attribute.getName() + " " + value);
+//					log.trace("EAttribute was many = " + attribute.getName() + " " + value);
 
 					final Consumer<Object> _function = new Consumer<Object>() {
 
@@ -134,46 +137,47 @@ public class Serializer {
 					};
 					((Collection<Object>) value).forEach(_function);
 				} else {
-					log.trace("EAttribute was NOT many = " + attribute.getName() + " " + value);
+					log.trace("EAttribute value= " + value);
 					_xifexpression = this.extensions.add(graph, eObject, attribute, value, factory);
 				}
 				_xblockexpression = _xifexpression;
 			}
-		}
 		return Boolean.valueOf(_xblockexpression);
 	}
 
 	private Boolean serialize(final EReference reference, final EObject eObject, final Model graph,
 			final ValueFactory factory) {
-		log.debug("EReference=" + reference.getName());
+		log.debug("EReference=" + reference.getName() + " hsh=" + reference.hashCode() + " eObject=" + eObject.eClass().getName() + " hsh=" + eObject.hashCode());
 		boolean _xblockexpression = false;
 		{
 			boolean _isTransient = reference.isTransient();
 			boolean _eIsSet = eObject.eIsSet(reference);
 			if (_isTransient || !_eIsSet) {
-				log.trace("returned null EReference= " + reference.getName() + " _isTransient=" + _isTransient + " _eIsSet=" + _eIsSet);
+//				log.trace("returned null EReference= " + reference.getName() + " _isTransient=" + _isTransient + " _eIsSet=" + _eIsSet);
 				return null;
-			} else {
-				EList<EObject> eList = eObject.eContents();
-				final Consumer<EObject> _function = new Consumer<EObject>() {
-
-					@Override
-					public void accept(final EObject it) {
-						if (it instanceof AnyType) {
-							Serializer.this.serialize(eObject, (AnyType) it, graph, factory);
-						} else {
-							log.error("it was not AnyType it=" + it.getClass());
-							Serializer.this.to(it, graph, factory);
-						}
-					}
-				};
-				((Collection<EObject>) eList).forEach(_function);
-			}
+			} // else {
+//				EList<EObject> eList = eObject.eContents();
+//				final Consumer<EObject> _function = new Consumer<EObject>() {
+//
+//					@Override
+//					public void accept(final EObject it) {
+//						if (it instanceof AnyType) {
+////							log.trace("it was AnyType it=" + it.getClass());
+//							Serializer.this.serialize(eObject, (AnyType) it, graph, factory);
+//						} else {
+////							log.warn("it was *NOT* AnyType it=" + it.getClass());
+//							Serializer.this.to(it, graph, factory);
+//						}
+//					}
+//				};
+//				((Collection<EObject>) eList).forEach(_function);
+//			}
 
 			final Object value = eObject.eGet(reference);
 			boolean _xifexpression = false;
 			boolean _isMany = reference.isMany();
 			if (_isMany) {
+				log.debug("_isMany=" + _isMany);
 				final Consumer<Object> _function = new Consumer<Object>() {
 
 					@Override
@@ -183,6 +187,7 @@ public class Serializer {
 				};
 				((Collection<Object>) value).forEach(_function);
 			} else if (value instanceof FeatureMapUtil.FeatureEList) {
+				log.debug("_isFeature=");
 				FeatureMapUtil.FeatureEList features = (FeatureMapUtil.FeatureEList) value;
 				List<AnyType> anys = features.basicList();
 				for (AnyType any : anys) {
@@ -198,6 +203,7 @@ public class Serializer {
 					}
 				}
 			} else {
+				log.debug("_isMany=" + _isMany);
 				_xifexpression = this.serializeOne(eObject, reference, ((EObject) value), graph, factory);
 			}
 			_xblockexpression = _xifexpression;
@@ -225,7 +231,7 @@ public class Serializer {
 			@Override
 			public void accept(final FeatureMap.Entry it) {
 				EStructuralFeature feature = it.getEStructuralFeature();
-				log.trace("EStructuralFeature was = " + feature.getName() + " " + feature.eClass().getName());
+//				log.trace("EStructuralFeature was = " + feature.getName() + " " + feature.eClass().getName());
 				if (feature instanceof EAttribute) {
 					EDataType eDataType = ((EAttribute) feature).getEAttributeType();
 					Serializer.this.serialize((EAttribute) feature, eObject, graph, factory);
@@ -243,15 +249,16 @@ public class Serializer {
 
 	private boolean serializeOne(final EObject subject, final EReference reference, final EObject value,
 			final Model graph, final ValueFactory factory) {
-		log.debug("EObject=" + subject.eClass().getName() + " EReference=" + reference.getName());
+		log.debug("EObject=" + subject.eClass().getName() + " hsh=" + subject.hashCode() + " EReference=" + reference.getName() + " hsh=" + reference.hashCode());
+		log.debug("=> value=" + value.eClass().getName() + " hsh=" + value.hashCode());
 		boolean _xblockexpression = false;
-		{
+//		{
 			boolean _isContainment = reference.isContainment();
 			if (_isContainment) {
 				this.to(value, graph, factory);
 			}
 			_xblockexpression = this.extensions.add(graph, subject, reference, value);
-		}
+//		}
 		return _xblockexpression;
 	}
 }

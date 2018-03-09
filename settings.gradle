@@ -16,4 +16,3 @@ include 'services:webservice'
 */
 
 rootProject.name = 'emf2rdf'
-includeFlat 'sds4emf'

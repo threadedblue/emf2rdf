@@ -2,4 +2,4 @@ bin/
 build/
 target/
 *.log
-/.gradle/
+.gradle/
